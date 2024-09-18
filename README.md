@@ -17,7 +17,7 @@
   - [Useful commands](#useful-commands)
 
 
-This project is an AWS CDK (Cloud Development Kit) stack written in TypeScript that deploys an AutoScaling group, load balancer, and optionally a Route53 DNS record. It uses environment variables for configuration and requires manual setup for account-specific details.
+This project is an AWS CDK (Cloud Development Kit) stack written in TypeScript that deploys an AutoScaling group, load balancer, and optionally a Route53 DNS record. Serves 'Hello World' webpage. It uses environment variables for configuration and requires manual setup for account-specific details.
 
 ## Prerequisites
 

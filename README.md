@@ -3,14 +3,12 @@
 - [CDK TypeScript AWS AutoScaling Group](#cdk-typescript-aws-autoscaling-group)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
-    - [Step 1: Initialize Your AWS Profile](#step-1-initialize-your-aws-profile)
-    - [Step 2: Clone the Repository](#step-2-clone-the-repository)
-    - [Step 3: Configure Account ID and Region](#step-3-configure-account-id-and-region)
-    - [Step 4: Set Up Environment Variables](#step-4-set-up-environment-variables)
-    - [Step 5: Deployment](#step-5-deployment)
+    - [Install the dependencies:](#install-the-dependencies)
+    - [Set Up Environment Variables](#set-up-environment-variables)
+    - [Deployment](#deployment)
       - [Build and Synthesize (Optional)](#build-and-synthesize-optional)
       - [Deploy the Stack](#deploy-the-stack)
-    - [Step 6: Destroy the Stack](#step-6-destroy-the-stack)
+    - [Destroy the Stack](#destroy-the-stack)
   - [How This Was Built](#how-this-was-built)
   - [Additional Notes](#additional-notes)
   - [Useful commands](#useful-commands)
@@ -34,49 +32,19 @@ npm install -g aws-cdk
 
 ## Setup
 
-### Step 1: Initialize Your AWS Profile
-
-Ensure your AWS CLI is configured with the appropriate AWS credentials:
+### Install the dependencies:
 
 ```bash
-aws configure --profile <your-aws-profile>
-```
-
-### Step 2: Clone the Repository
-
-Clone this repository and install the dependencies:
-
-```bash
-git clone <repository-url>
-cd cdk-typescript-aws-autoscaling-group
 npm install
 ```
 
-### Step 3: Configure Account ID and Region
-
-Edit the `bin/cdk-typescript-aws-autoscaling-group.ts` file and replace the placeholders for your AWS account ID and region:
-
-```typescript
-#!/usr/bin/env node
-import * as cdk from 'aws-cdk-lib';
-import { CdkTypescriptAwsAutoscalingGroupStack } from '../lib/cdk-typescript-aws-autoscaling-group-stack';
-
-const app = new cdk.App();
-new CdkTypescriptAwsAutoscalingGroupStack(app, 'CdkTypescriptAwsAutoscalingGroupStack', {
-  env: {
-    account: '<your-account-id>',
-    region: '<your-region>',
-  },
-});
-```
-
-### Step 4: Set Up Environment Variables
+### Set Up Environment Variables
 
 To configure environment-specific settings, you'll need to create and fill out the appropriate `.env` files.
 
 1. **Default `.env.dns` for DNS configurations:**
 
-   If you want to enable Route53 DNS record creation, create the `.env.dns` file with the following structure:
+   If you want to enable Route53 DNS record creation, the `.env.dns` file has the following structure:
 
    ```plaintext
    TAGS='[{"key": "Name", "value": "cdk-demo"}, {"key": "environment", "value": "production"}]'
@@ -104,7 +72,7 @@ export HOSTED_ZONE_ID='' # Only required if CREATE_DNS_RECORD=true
 export ZONE_NAME='' # Only required if CREATE_DNS_RECORD=true
 ```
  
-### Step 5: Deployment
+### Deployment
 
 #### Build and Synthesize (Optional)
 
@@ -125,7 +93,7 @@ To deploy the stack to your AWS account:
 
 This will deploy your resources, including AutoScaling groups, security groups, load balancers, and (optionally) DNS records if the `.env.dns` file is configured.
 
-### Step 6: Destroy the Stack
+### Destroy the Stack
 
 To tear down all the resources created by this stack:
 

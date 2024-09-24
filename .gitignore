@@ -10,5 +10,4 @@ cdk.out
 
 # JK additions
 cdk.context.json
-bin/cdk-typescript-aws-autoscaling-group.ts
-.env.dns
+.env.common

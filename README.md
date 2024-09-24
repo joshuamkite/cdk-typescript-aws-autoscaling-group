@@ -8,7 +8,6 @@
     - [Step 3: Configure Account ID and Region](#step-3-configure-account-id-and-region)
     - [Step 4: Set Up Environment Variables](#step-4-set-up-environment-variables)
     - [Step 5: Deployment](#step-5-deployment)
-      - [Set AWS Profile](#set-aws-profile)
       - [Build and Synthesize (Optional)](#build-and-synthesize-optional)
       - [Deploy the Stack](#deploy-the-stack)
     - [Step 6: Destroy the Stack](#step-6-destroy-the-stack)
@@ -82,9 +81,6 @@ To configure environment-specific settings, you'll need to create and fill out t
    ```plaintext
    TAGS='[{"key": "Name", "value": "cdk-demo"}, {"key": "environment", "value": "production"}]'
    CREATE_DNS_RECORD=true
-   DNS_NAME="your-dns-name.example.com"
-   HOSTED_ZONE_ID="your-hosted-zone-id"
-   ZONE_NAME="your-zone-name.example.com"
    ```
 
 2. **Default `.env.notdns` for configurations without DNS:**
@@ -95,16 +91,20 @@ To configure environment-specific settings, you'll need to create and fill out t
    TAGS='[{"key": "Name", "value": "cdk-demo"}, {"key": "environment", "value": "development"}]'
    CREATE_DNS_RECORD=false
    ```
-   
-### Step 5: Deployment
 
-#### Set AWS Profile
-
-Before running any CDK commands, make sure you set your AWS profile:
+I find it simpler to export environment variables directly for the common parts, e.g. `source .env.common` where `.env.common` is like:
 
 ```bash
-export AWS_PROFILE=<your-aws-profile>
+export CDK_DEFAULT_ACCOUNT=
+export CDK_DEFAULT_REGION=
+export AWS_PROFILE=
+export AWS_REGION=
+export DNS_NAME="" # Only required if CREATE_DNS_RECORD=true
+export HOSTED_ZONE_ID='' # Only required if CREATE_DNS_RECORD=true
+export ZONE_NAME='' # Only required if CREATE_DNS_RECORD=true
 ```
+ 
+### Step 5: Deployment
 
 #### Build and Synthesize (Optional)
 
@@ -112,8 +112,7 @@ You should be in the project's root directory to build and synthesize the CDK ap
 
 ```bash
 npm run build
-NODE_ENV=notdns cdk synth
-NODE_ENV=dns cdk synth
+cdk synth
 ```
 
 #### Deploy the Stack
@@ -121,8 +120,7 @@ NODE_ENV=dns cdk synth
 To deploy the stack to your AWS account:
 
 ```bash
-NODE_ENV=notdns cdk deploy
-NODE_ENV=dns cdk deploy
+   cdk deploy
 ```
 
 This will deploy your resources, including AutoScaling groups, security groups, load balancers, and (optionally) DNS records if the `.env.dns` file is configured.
@@ -132,8 +130,7 @@ This will deploy your resources, including AutoScaling groups, security groups, 
 To tear down all the resources created by this stack:
 
 ```bash
-NODE_ENV=notdns cdk destroy
-NODE_ENV=dns cdk destroy
+   cdk destroy
 ```
 
 ## How This Was Built
